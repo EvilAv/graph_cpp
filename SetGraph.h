@@ -1,17 +1,18 @@
-#ifndef MATRIXGRAPH_H
-#define MATRIXGRAPH_H
+#ifndef SETGRAPH_H
+#define SETGRAPH_H
 
 #include "IGraph.h"
 #include <cassert>
 #include <vector>
+#include <unordered_set>
 
-struct MatrixGraph : public IGraph {
+struct SetGraph : public IGraph {
 public:
-    MatrixGraph(int size);
+    SetGraph(int size);
 
-    MatrixGraph(const IGraph& graph);
+    SetGraph(const IGraph& graph);
 
-    ~MatrixGraph();
+    ~SetGraph();
 
     void AddEdge(int from, int to) override;
 
@@ -22,7 +23,7 @@ public:
     std::vector<int> GetPrevVertices(int vertex) const override;
 
 private:
-    std::vector<std::vector<bool>> matrix;
+    std::vector<std::unordered_set<int>> set_list;
 };
 
 #endif

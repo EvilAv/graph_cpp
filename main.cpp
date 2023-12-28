@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include "ListGraph.h"
 #include "MatrixGraph.h"
+#include "SetGraph.h"
+#include "ArcGraph.h"
 #include "Utils.h"
 
 int main()
@@ -20,28 +22,42 @@ int main()
     l_graph.AddEdge(6, 4);
 
 
-    std::cout << std::endl << "Origin ListGraph" << std::endl;
+    std::cout << std::endl << "Origin ListGraph with " << l_graph.VerticesCount() << " vertices" << std::endl;
     mainBFS(l_graph, [](int vertex) { std::cout << vertex << " "; });
     std::cout << std::endl;
     mainDFS(l_graph, [](int vertex) { std::cout << vertex << " "; });
     std::cout << std::endl;
 
     ListGraph l_graph2(l_graph);
-    std::cout << std::endl << "Copy ListGraph" << std::endl;
+    std::cout << std::endl << "Copy ListGraph with " << l_graph2.VerticesCount() << " vertices" << std::endl;
     mainBFS(l_graph2, [](int vertex) { std::cout << vertex << " "; });
     std::cout << std::endl;
     mainDFS(l_graph2, [](int vertex) { std::cout << vertex << " "; });
     std::cout << std::endl;
 
-    MatrixGraph m_graph(l_graph);
-    std::cout << std::endl << "MatrixGraph" << std::endl;
+    ArcGraph a_graph(l_graph2);
+    std::cout << std::endl << "ArcGraphh with " << a_graph.VerticesCount() << " vertices" << std::endl;
+    mainBFS(a_graph, [](int vertex) { std::cout << vertex << " "; });
+    std::cout << std::endl;
+    mainDFS(a_graph, [](int vertex) { std::cout << vertex << " "; });
+    std::cout << std::endl;
+
+    MatrixGraph m_graph(a_graph);
+    std::cout << std::endl << "MatrixGraphh with " << m_graph.VerticesCount() << " vertices" << std::endl;
     mainBFS(m_graph, [](int vertex) { std::cout << vertex << " "; });
     std::cout << std::endl;
     mainDFS(m_graph, [](int vertex) { std::cout << vertex << " "; });
     std::cout << std::endl;
 
+    SetGraph s_graph(m_graph);
+    std::cout << std::endl << "SetGraphh with " << s_graph.VerticesCount() << " vertices" << std::endl;
+    mainBFS(s_graph, [](int vertex) { std::cout << vertex << " "; });
+    std::cout << std::endl;
+    mainDFS(s_graph, [](int vertex) { std::cout << vertex << " "; });
+    std::cout << std::endl;
+
     // ArcGraph arcGraph(listGraph);
     // Продемонстрировать, что число вершин не изменилось. Сделать BFS, DFS.
-    // MatrixGraph matrixGraph(arcGraph);
+    // MatrixGraph matrixGraph(arcGraph); +
     // SetGraph setGraph(matrixGraph);
 }

@@ -1,42 +1,50 @@
 #include "MatrixGraph.h"
 
 MatrixGraph::MatrixGraph(int size)
-    : adjacencyLists(size) {
+    : matrix(size, std::vector<bool>(size, false)) {
 }
 
 MatrixGraph::MatrixGraph(const IGraph& graph)
-    : adjacencyLists(graph.VerticesCount()) {
-    for (int i = 0; i < graph.VerticesCount(); i++)
-        adjacencyLists[i] = graph.GetNextVertices(i);
+    : matrix(graph.VerticesCount(), std::vector<bool>(graph.VerticesCount(), false)) {
+    for (int i = 0; i < graph.VerticesCount(); i++) {
+
+        for (int cell : graph.GetNextVertices(i)) {
+            matrix[i][cell] = true;
+        }
+    }
 }
 
 MatrixGraph::~MatrixGraph() {
 }
 
 void MatrixGraph::AddEdge(int from, int to) {
-    assert(0 <= from && from < adjacencyLists.size());
-    assert(0 <= to && to < adjacencyLists.size());
-    adjacencyLists[from].push_back(to);
+    assert(0 <= from && from < matrix.size());
+    assert(0 <= to && to < matrix.size());
+    matrix[from][to] = true;
 }
 
 int MatrixGraph::VerticesCount() const {
-    return static_cast<int>(adjacencyLists.size());
+    return static_cast<int>(matrix.size());
 }
 
 std::vector<int> MatrixGraph::GetNextVertices(int vertex) const {
-    assert(0 <= vertex && vertex < adjacencyLists.size());
-    return adjacencyLists[vertex];
+    assert(0 <= vertex && vertex < matrix.size());
+    std::vector<int> res;
+    for (int i = 0; i < matrix.size(); i++) {
+        if (matrix[vertex][i]) {
+            res.push_back(i);
+        }
+    }
+    return res;
 }
 
 std::vector<int> MatrixGraph::GetPrevVertices(int vertex) const {
-    assert(0 <= vertex && vertex < adjacencyLists.size());
-    std::vector<int> prevVertices;
-
-    for (int from = 0; from < adjacencyLists.size(); from++) {
-        for (int to : adjacencyLists[from]) {
-            if (to == vertex)
-                prevVertices.push_back(from);
+    assert(0 <= vertex && vertex < matrix.size());
+    std::vector<int> res;
+    for (int i = 0; i < matrix.size(); i++) {
+        if (matrix[i][vertex]) {
+            res.push_back(i);
         }
     }
-    return prevVertices;
+    return res;
 }

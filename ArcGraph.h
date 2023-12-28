@@ -1,17 +1,18 @@
-#ifndef MATRIXGRAPH_H
-#define MATRIXGRAPH_H
+#ifndef ARCGRAPH_H
+#define ARCGRAPH_H
 
 #include "IGraph.h"
 #include <cassert>
 #include <vector>
+#include <utility>
 
-struct MatrixGraph : public IGraph {
+struct ArcGraph : public IGraph {
 public:
-    MatrixGraph(int size);
+    ArcGraph(int size);
 
-    MatrixGraph(const IGraph& graph);
+    ArcGraph(const IGraph& graph);
 
-    ~MatrixGraph();
+    ~ArcGraph();
 
     void AddEdge(int from, int to) override;
 
@@ -22,7 +23,9 @@ public:
     std::vector<int> GetPrevVertices(int vertex) const override;
 
 private:
-    std::vector<std::vector<bool>> matrix;
+    std::vector<std::pair<int, int>> edges;
+    int v_count;
 };
 
 #endif
+#pragma once
